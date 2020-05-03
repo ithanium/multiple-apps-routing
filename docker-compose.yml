@@ -1,0 +1,41 @@
+version: '3'
+services:
+  myapp-one:
+    build:
+      context: ./myapp-one
+      dockerfile: ./Dockerfile
+    #command: bash -c "pwd && ls -lrth && node myapp"
+    command: >
+      sh -c "pwd &&
+             ls -lrth &&
+             node myapp-one"
+    environment:
+      PORT: 3001
+      NODE_ENV: production
+    restart: always
+  
+  myapp-two:
+    build:
+      context: ./myapp-two
+      dockerfile: ./Dockerfile
+    command: >
+      sh -c "pwd &&
+             ls -lrth &&
+             node myapp-two"
+    environment:
+      PORT: 3002
+      NODE_ENV: production
+    restart: always
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: ./Dockerfile
+    # command: tail -f /dev/null
+    #command: nginx -g daemon off
+    depends_on:
+      - myapp-one
+      - myapp-two
+    ports:
+      - "80:80"
+    restart: always
