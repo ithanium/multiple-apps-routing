@@ -26,6 +26,19 @@ services:
       PORT: 3002
       NODE_ENV: production
     restart: always
+  
+  myangular-app:
+    build:
+      context: ./myangular-app
+      dockerfile: ./Dockerfile
+    #command: >
+    #  sh -c "pwd &&
+    #         ls -lrth &&
+    #         cd /usr/share/nginx/html/ && ng serve"
+    environment:
+      PORT: 3003
+      NODE_ENV: production
+    restart: always
 
   nginx:
     build:
@@ -36,6 +49,7 @@ services:
     depends_on:
       - myapp-one
       - myapp-two
+      - myangular-app
     ports:
       - "80:80"
     restart: always
