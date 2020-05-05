@@ -1,5 +1,5 @@
 FROM node:10-alpine as builder
-RUN npm install -g @angular/cli
+#RUN npm install -g @angular/cli
 COPY package.json package-lock.json ./
 RUN npm install && mkdir /myangular-app && mv ./node_modules ./myangular-app
 WORKDIR /myangular-app
